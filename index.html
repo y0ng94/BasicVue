@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>뷰 기초 익히기</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+            crossorigin="anonymous"
+        />
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+            crossorigin="anonymous"
+        ></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <style>
+            #app h4 {
+                font-family: Avenir, Helvetica, Arial, sans-serif;
+            }
+        </style>
+    </head>
+    <body class="m-4">
+        <div id="app" class="d-flex justify-content-center flex-column align-items-center">
+            <h4 class="text-primary">{{ text.name }}</h4>
+            <div>{{ nextYear('안녕하세요') }}</div>
+            <br />
+            <!-- v-bind 생략 가능 -->
+            <input v-bind:type="type" v-bind:value="inputData" class="form-control" />
+            <input :type="type" :value="inputData" class="form-control" />
+            <br />
+            <a :href="getLink('y0ng94')">깃헙 링크를 만들어보자</a>
+            <button v-on:click="alert" class="btn btn-primary">Click</button>
+            <br />
+            <div class="btn-group">
+                <button v-on:click="plus" class="btn btn-primary">더하기</button>
+                <button v-on:click="minus" class="btn btn-danger">빼기</button>
+            </div>
+            <div class="border border-dark-subtle">{{ year }}</div>
+            <br />
+            <h5>이벤트</h5>
+            <form v-on:submit.prevent="submit()" class="d-grid">
+                <input type="text" class="form-control" id="submitId" />
+                <button type="submit" class="btn btn-secondary">Submit</button>
+                <div id="submitText" class="fw-bold"></div>
+            </form>
+            <br />
+            <input :type="type" :value="inputText" @keyup="updateText" />
+            {{ inputText }}
+            <br />
+            <input :type="type" v-model="inputText2" />
+            {{ inputText2 }}
+            <br />
+            {{ message.split('').reverse().join('') }}
+            <br />
+            {{ reversedMessage }}
+            <br />
+            <button @click="changeMessage" class="btn btn-primary">Click</button>
+        </div>
+
+        <script>
+            new Vue({
+                el: "#app",
+                data: {
+                    text: {
+                        name: "뷰 배워보기",
+                        age: 30,
+                    },
+                    inputData: "Default",
+                    type: "text",
+                    link: "https://github.com/",
+                    year: 2023,
+                    inputText: "텍스트 동기화",
+                    inputText2: "양방향 텍스트",
+                    number: 1,
+                    message: "안녕하세요",
+                },
+                methods: {
+                    getLink(text) {
+                        return this.link + text;
+                    },
+                    nextYear(greeting) {
+                        return greeting + "! 내년에는 " + (this.text.age + 1) + "살 입니다.";
+                    },
+                    // function 생략 가능
+                    otherMethod: function () {
+                        this.nextYear();
+                    },
+                    alert() {
+                        alert("Hi");
+                    },
+                    plus() {
+                        this.year++;
+                    },
+                    minus() {
+                        this.year--;
+                    },
+                    submit() {
+                        document.getElementById("submitText").textContent = document.getElementById("submitId").value;
+                    },
+                    updateText() {
+                        this.inputText = event.target.value;
+                    },
+                    changeMessage() {
+                        this.message = "헬로우 월드";
+                    },
+                },
+                computed: {
+                    reversedMessage() {
+                        return this.message.split("").reverse().join("");
+                    },
+                },
+            });
+        </script>
+    </body>
+</html>
