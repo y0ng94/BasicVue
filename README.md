@@ -1,2 +1,2 @@
 # BasicVue
-First Vue.js First Practice
+Vue.js First Practice
