@@ -1,4 +1,30 @@
-new Vue({
+Vue.component("innerComponent", {
+	template: `
+		<div>innerComponent</div>
+	`,
+});
+
+Vue.component("comp", {
+	template: `
+		<div class="w-100 border border-3 border-primary-subtle rounded p-2">
+			<span class="text-secondary fst-italic">컴포넌트</span>
+			<hr />
+			{{ name }}
+			<button @click="changeText" class="btn btn-dark">텍스트 변경</button>
+			<innerComponent></innerComponent>
+		</div>
+	`,
+	data() {
+		return { name: "component" };
+	},
+	methods: {
+		changeText() {
+			this.name = "change text";
+		},
+	},
+});
+
+const title = new Vue({
 	el: "#title",
 	data: {
 		text: {
@@ -7,7 +33,27 @@ new Vue({
 	},
 });
 
-new Vue({
+const comp2 = {
+	template: `
+		<div class="w-100 border border-3 border-primary-subtle rounded p-2">
+			<span class="text-secondary fst-italic">지역 컴포넌트</span>
+			<hr />
+			{{ name }}
+			<button @click="changeText" class="btn btn-dark">텍스트 변경</button>
+			<innerComponent></innerComponent>
+		</div>
+	`,
+	data() {
+		return { name: "component2" };
+	},
+	methods: {
+		changeText() {
+			this.name = "change text";
+		},
+	},
+};
+
+const app = new Vue({
 	el: "#app",
 	data: {
 		text: {
@@ -61,7 +107,7 @@ new Vue({
 		submit() {
 			document.getElementById("submitText").textContent = document.getElementById("submitId").value;
 		},
-		updateText() {
+		updateText(event) {
 			this.inputText = event.target.value;
 		},
 		changeMessage() {
@@ -93,6 +139,19 @@ new Vue({
 		watchMessage(newVal, oldVal) {
 			console.log(newVal, oldVal);
 			this.updated = "네";
+		},
+	},
+	components: {
+		comp2: comp2,
+	},
+});
+
+const another = new Vue({
+	el: "#another",
+	data: {},
+	methods: {
+		changeTitle() {
+			title.text.name = "제목 변경";
 		},
 	},
 });

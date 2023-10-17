@@ -48,6 +48,13 @@
 		<div id="title">
 			<h4 class="text-primary">{{ text.name }}</h4>
 		</div>
+		<div id="another">
+			<div class="w-100 border border-3 border-primary-subtle rounded p-2">
+				<span class="text-secondary fst-italic">다른 인스턴트 접근</span>
+				<hr />
+				<button @click="changeTitle" class="btn btn-primary">제목 변경</button>
+			</div>
+		</div>
 		<div id="app" class="d-flex justify-content-center flex-column-reverse align-items-center">
 			<br />
 
@@ -164,10 +171,13 @@
 			<div class="w-100 border border-3 border-primary-subtle rounded p-2">
 				<span class="text-secondary fst-italic">반복문</span>
 				<hr />
-				보통 of 대신 in 씀
-				<div v-for="(person, index) in people" :key="id">{{ person.name }} {{ person.age }} {{ index }}</div>
+				<div v-for="(person, index) in people" :key="person.id">{{ person.name }} {{ person.age }} {{ index }}</div>
 				<div v-for="person of people">{{ person.name }} {{ person.age }}</div>
 			</div>
+
+			<comp></comp>
+
+			<comp2></comp2>
 		</div>
 	</body>
 	<script src="./index.js"></script>
